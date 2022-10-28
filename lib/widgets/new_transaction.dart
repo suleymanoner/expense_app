@@ -7,6 +7,24 @@ class NewTransaction extends StatelessWidget {
 
   NewTransaction(this.addNewTx);
 
+  bool checkInputs() {
+    if (titleController.text.isNotEmpty &&
+        amountController.text.isNotEmpty &&
+        double.tryParse(amountController.text) >= 0 &&
+        double.tryParse(amountController.text) != null) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  void submitData() {
+    addNewTx(
+      titleController.text,
+      double.parse(amountController.text),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -23,6 +41,18 @@ class NewTransaction extends StatelessWidget {
             TextField(
               decoration: InputDecoration(labelText: 'Amount'),
               controller: amountController,
+              keyboardType: TextInputType.numberWithOptions(decimal: true),
+              onSubmitted: (_) {
+                if (checkInputs()) {
+                  submitData();
+                } else {
+                  return ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text('Please fill all blanks properly!'),
+                    ),
+                  );
+                }
+              },
             ),
             OutlinedButton(
               child: Text(
@@ -30,16 +60,12 @@ class NewTransaction extends StatelessWidget {
                 style: TextStyle(color: Colors.purple),
               ),
               onPressed: () {
-                if (titleController.text.isNotEmpty &&
-                    amountController.text.isNotEmpty) {
-                  addNewTx(
-                    titleController.text,
-                    double.parse(amountController.text),
-                  );
+                if (checkInputs()) {
+                  submitData();
                 } else {
                   return ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
-                      content: Text('Please fill all blanks!'),
+                      content: Text('Please fill all blanks properly!'),
                     ),
                   );
                 }
