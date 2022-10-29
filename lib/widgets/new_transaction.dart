@@ -1,11 +1,18 @@
 import 'package:flutter/material.dart';
 
-class NewTransaction extends StatelessWidget {
-  final titleController = TextEditingController();
-  final amountController = TextEditingController();
+class NewTransaction extends StatefulWidget {
   final Function addNewTx;
 
   NewTransaction(this.addNewTx);
+
+  @override
+  State<NewTransaction> createState() => _NewTransactionState();
+}
+
+class _NewTransactionState extends State<NewTransaction> {
+  final titleController = TextEditingController();
+
+  final amountController = TextEditingController();
 
   bool checkInputs() {
     if (titleController.text.isNotEmpty &&
@@ -19,10 +26,12 @@ class NewTransaction extends StatelessWidget {
   }
 
   void submitData() {
-    addNewTx(
+    widget.addNewTx(
       titleController.text,
       double.parse(amountController.text),
     );
+
+    Navigator.of(context).pop();
   }
 
   @override
@@ -49,6 +58,8 @@ class NewTransaction extends StatelessWidget {
                   return ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
                       content: Text('Please fill all blanks properly!'),
+                      behavior: SnackBarBehavior.floating,
+                      margin: EdgeInsets.only(bottom: 400),
                     ),
                   );
                 }
@@ -66,6 +77,8 @@ class NewTransaction extends StatelessWidget {
                   return ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
                       content: Text('Please fill all blanks properly!'),
+                      behavior: SnackBarBehavior.floating,
+                      margin: EdgeInsets.only(bottom: 400),
                     ),
                   );
                 }
