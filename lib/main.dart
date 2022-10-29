@@ -14,7 +14,8 @@ class MyApp extends StatelessWidget {
       title: 'Expense App',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.red,
+        fontFamily: 'Quicksand',
       ),
       home: MyHomePage(),
     );
@@ -66,7 +67,10 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Expense App'),
+        title: Text(
+          'Expense App',
+          style: TextStyle(fontFamily: 'Open Sans'),
+        ),
         actions: [
           IconButton(
             onPressed: () {
